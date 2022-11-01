@@ -1,0 +1,3 @@
+/home/og21893/Web_Server_for_Booking_System/sys_backend/build/CMakeFiles/edit_cache.dir
+/home/og21893/Web_Server_for_Booking_System/sys_backend/build/CMakeFiles/rebuild_cache.dir
+/home/og21893/Web_Server_for_Booking_System/sys_backend/build/CMakeFiles/BookingAPI.dir
