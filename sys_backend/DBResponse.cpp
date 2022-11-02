@@ -26,7 +26,7 @@ DBResponse::DBResponse() {
     mysqlD.server = "localhost";  // where the mysql database is
     mysqlD.user = "root";         // user
     mysqlD.pwd = "og21893";       // the password for the database
-    mysqlD.database = "movie";	  // the databse
+    mysqlD.database = "events";	  // the databse
 
     conn = mysql_init(0);
     if (conn) {
@@ -46,3 +46,25 @@ DBResponse::DBResponse() {
     }
 }
 
+int add_particpant_to_db(const string name, const string email, const int event, const int seat) {
+
+    // Member_d member;
+
+    string insert_query = 
+        "insert into movie_tb (id, name, email, event, seat) \
+            values ('"+name+"','"+email+"','"+to_string(event)+"', '"+to_string(seat)+"')";
+
+    // c_str converts string to constant char and this is required
+    const char* q = insert_query.c_str(); 
+
+    qstate = mysql_query(conn, q);
+
+    if (!qstate) {
+        cout << endl << "Successfully added in database." << endl;
+        return 1;
+    }
+
+    cout << "Query Execution Problem!" << mysql_errno(conn) << endl;
+    return 0;
+    
+}

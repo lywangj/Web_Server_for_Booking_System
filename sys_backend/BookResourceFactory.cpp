@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iomanip>
 #include "json.hpp"
+#include "DBResponse.h"
 
 using namespace nlohmann;
 
@@ -13,6 +14,7 @@ BookResourceFactory::BookResourceFactory() {
         // "/events"
         "/{name: .+}"
         "/{email: .+}"
+        "/{event: [0-9]*}"
         "/{event: [0-9]*}");
     std::cout << "BookResourceFactory2" << endl;
     _resource->set_method_handler("GET", 
@@ -41,14 +43,16 @@ shared_ptr<Resource> BookResourceFactory::get_resource() const {
 //     }
 // }
 
-tuple<string, string, int> BookResourceFactory::get_path_parameters(
+tuple<string, string, int, int> BookResourceFactory::get_path_parameters(
         const shared_ptr<Session> session) const {
     const auto& request = session->get_request();
     const auto applied_name = request->get_path_parameter("name");
     const auto applied_email = request->get_path_parameter("email");
     auto applied_event = atoi(request->get_path_parameter("event").c_str());
-    std::cout << "Recieved data : " << applied_name << " " << applied_email << " " << applied_event;
-    return make_tuple(applied_name, applied_email, applied_event);
+    auto applied_seat = atoi(request->get_path_parameter("seat").c_str());
+    std::cout << "Recieved data : " << applied_name << " " << applied_email \
+        << " " << applied_event << " " << applied_seat << endl;
+    return make_tuple(applied_name, applied_email, applied_event, applied_seat);
 } 
 
 string BookResourceFactory::to_json(int update_result) {
@@ -61,11 +65,11 @@ string BookResourceFactory::to_json(int update_result) {
 }
 
 void BookResourceFactory::get_handler(const shared_ptr<Session> session) {
-    const auto [name, email, booked_event] = get_path_parameters(session);
+    const auto [name, email, booked_event, booked_seats] = get_path_parameters(session);
     // auto result = calculate(num1, num2, operation);
     int result = 1;
 
-    // result = DBResponse::add_particpant_to_db(name, email, booked_event);
+    result = DBResponse::add_particpant_to_db(name, email, booked_event, booked_seats);
 
     std::cout << "BookResourceFactory: get_handler1" << endl;
     auto content = to_json(result);

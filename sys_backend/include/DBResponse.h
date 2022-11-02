@@ -4,7 +4,7 @@
 // #include <iostream>
 // #include <fstream>
 // #include <vector>
-// #include <string>
+#include <string>
 // #include <cassert>
 #include <mysql/mysql.h>
 // #include "interface.h"
@@ -15,10 +15,19 @@ using namespace std;
 // MYSQL_ROW row;
 // MYSQL_RES* res;
 
+    // MYSQL* conn;
+    // int qstate;
+
 typedef struct connection_details
 {
     const char *server, *user, *pwd, *database;
 } Cdetails;
+
+typedef struct Member_details
+{
+    const string name, email;
+    const int event, seat;
+} Member_d;
 
 typedef struct Movie_details
 {
@@ -29,12 +38,18 @@ class DBResponse {
     
 private:
 
-    MYSQL* conn;
+    // MYSQL* conn;
+    // int qstate;
 
 
 public:
 
+    MYSQL* conn;
+    int qstate;
+
     DBResponse();
+
+    int add_particpant_to_db(const string name, const string email, const int event, const int seat);
 
     // void connecting();
 

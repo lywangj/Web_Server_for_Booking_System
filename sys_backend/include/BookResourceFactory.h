@@ -3,6 +3,7 @@
 #include <string>
 #include <tuple>
 
+#include "DBResponse.h"
 #include "IResourceFactory.h"
 
 class BookResourceFactory : public IResourceFactory {
@@ -16,7 +17,7 @@ private:
 
     // float calculate(float num1, float num2, string operation);
 
-    tuple<string, string, int> 
+    tuple<string, string, int, int> 
             get_path_parameters(const shared_ptr<Session> session) const;
             
     string to_json(int result);
