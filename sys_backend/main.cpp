@@ -3,9 +3,18 @@
 #include "BookResourceFactory.h"
 #include "BookServiceSettingsFactory.h"
 #include "BookService.h"
+#include "DBResponse.h"
+#include <mysql/mysql.h>
+
+// using namespace std;
+
 
 int main(const int, const char**)
 {
+    
+    DBResponse db {};
+    // DBResponse::connecting();
+
     auto book_resource_factory = make_shared<BookResourceFactory>();
     auto book_service_settings_factory = 
         make_shared<BookServiceSettingsFactory>();

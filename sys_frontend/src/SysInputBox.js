@@ -18,7 +18,13 @@ function SysInputBox(props) {
       const url = new URL(resource, 'http://127.0.0.1:8080');
 
       fetch(url)
-      .then((response) => response.json());
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
       // fetch(url, {
       //   method: 'POST',
       //   headers: { 

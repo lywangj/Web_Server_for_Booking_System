@@ -61,15 +61,18 @@ string BookResourceFactory::to_json(int update_result) {
 }
 
 void BookResourceFactory::get_handler(const shared_ptr<Session> session) {
-    const auto [num1, num2, operation] = get_path_parameters(session);
+    const auto [name, email, booked_event] = get_path_parameters(session);
     // auto result = calculate(num1, num2, operation);
     int result = 1;
+
+    // result = DBResponse::add_particpant_to_db(name, email, booked_event);
+
     std::cout << "BookResourceFactory: get_handler1" << endl;
     auto content = to_json(result);
     std::cout << "BookResourceFactory: get_handler2" << endl;
     // session->close(restbed::OK);
     session->close(OK, content, 
-        // {{"Content-Type", "application/json"},
-         {{"Content-Length", to_string(content.size())}});
+        {{"Content-Type", "application/json"},
+         {"Content-Length", to_string(content.size())}});
     std::cout << "BookResourceFactory: get_handler3" << endl;
 }
