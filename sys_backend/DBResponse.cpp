@@ -13,6 +13,9 @@
 
 using namespace std;
 
+MYSQL* conn;
+
+
 // typedef struct connection_details
 // {
 //     const char *server, *user, *pwd, *database;
@@ -46,18 +49,26 @@ DBResponse::DBResponse() {
     }
 }
 
+void test() {
+    cout << "test" << endl;
+}
+
 int add_particpant_to_db(const string name, const string email, const int event, const int seat) {
 
     // Member_d member;
 
     string insert_query = 
-        "insert into movie_tb (id, name, email, event, seat) \
-            values ('"+name+"','"+email+"','"+to_string(event)+"', '"+to_string(seat)+"')";
+        "insert into member_tb (name, email, event, seat) values ('" \
+            +name+"','"+email+"','"+to_string(event)+"', '"+to_string(seat)+"')";
+
+    cout << insert_query << endl;
 
     // c_str converts string to constant char and this is required
     const char* q = insert_query.c_str(); 
 
-    qstate = mysql_query(conn, q);
+    // MYSQL* conn = DBResponse::get_conn();
+
+    int qstate = mysql_query(conn, q);
 
     if (!qstate) {
         cout << endl << "Successfully added in database." << endl;

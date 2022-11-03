@@ -9,13 +9,15 @@ using namespace nlohmann;
 
 BookResourceFactory::BookResourceFactory() {
     std::cout << "BookResourceFactory1" << endl;
+    DBResponse dbserver {};
+    _dbserver = dbserver;
     _resource = make_shared<Resource>();
     _resource->set_path(
         // "/events"
         "/{name: .+}"
         "/{email: .+}"
         "/{event: [0-9]*}"
-        "/{event: [0-9]*}");
+        "/{seat: [0-9]*}");
     std::cout << "BookResourceFactory2" << endl;
     _resource->set_method_handler("GET", 
         [&](const auto session) {
@@ -69,7 +71,8 @@ void BookResourceFactory::get_handler(const shared_ptr<Session> session) {
     // auto result = calculate(num1, num2, operation);
     int result = 1;
 
-    result = DBResponse::add_particpant_to_db(name, email, booked_event, booked_seats);
+    result = _dbserver.add_particpant_to_db(name, email, booked_event, booked_seats);
+    // _dbserver.test();
 
     std::cout << "BookResourceFactory: get_handler1" << endl;
     auto content = to_json(result);

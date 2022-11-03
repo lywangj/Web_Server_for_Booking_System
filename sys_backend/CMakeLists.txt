@@ -4,7 +4,6 @@ project(BookingAPI)
 
 add_executable(BookingAPI 
     main.cpp 
-    DBResponse.cpp
     BookResourceFactory.cpp
     BookService.cpp
     BookServiceSettingsFactory.cpp)

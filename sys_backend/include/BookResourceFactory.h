@@ -25,4 +25,6 @@ private:
     void get_handler(const shared_ptr<Session> session);
 
     shared_ptr<Resource> _resource;
+
+    DBResponse _dbserver;
 };

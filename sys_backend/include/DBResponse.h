@@ -1,11 +1,11 @@
 #pragma once
 // #ifndef __DB_RESPONSE_H__
 // #define __DB_RESPONSE_H__
-// #include <iostream>
-// #include <fstream>
-// #include <vector>
+#include <iostream>
+#include <fstream>
+#include <vector>
 #include <string>
-// #include <cassert>
+#include <cassert>
 #include <mysql/mysql.h>
 // #include "interface.h"
 
@@ -38,47 +38,84 @@ class DBResponse {
     
 private:
 
-    // MYSQL* conn;
+    MYSQL* conn;
     // int qstate;
 
 
 public:
 
-    MYSQL* conn;
-    int qstate;
+    // static MYSQL* conn;
+    // int qstate;
 
-    DBResponse();
+    // DBResponse();
 
-    int add_particpant_to_db(const string name, const string email, const int event, const int seat);
+    // MYSQL* get_conn() { return conn; }
+
+    // void test();
+
+    // int add_particpant_to_db(const string name, const string email, const int event, const int seat);
+
+    // int add_particpant_to_db(const auto name, const auto email, const auto event, const auto seat);
 
     // void connecting();
 
-    // void connecting() {
-    // // cout << server << " " << user << " " << pwd << " " << database << endl;
+    void test() {
+        cout << "test" << endl;
+    }
 
-    //     Cdetails mysqlD;
-    //     mysqlD.server = "localhost";  // where the mysql database is
-    //     mysqlD.user = "root";         // user
-    //     mysqlD.pwd = "og21893";       // the password for the database
-    //     mysqlD.database = "movie";	  // the databse
+    int add_particpant_to_db(const string name, const string email, const int event, const int seat) {
 
-    //     conn = mysql_init(0);
-    //     if (conn) {
-    //         cout << "Database Connected" << endl;
-    //         cout << "Wait to continue..." << endl;
-    //     } else {
-    //         cout << "Failed To Connect!" << mysql_errno(conn) << endl;
-    //     }
+        // Member_d member;
+
+        string insert_query = 
+            "insert into member_tb (name, email, event, seat) values ('" \
+                +name+"','"+email+"','"+to_string(event)+"', '"+to_string(seat)+"')";
+
+        cout << insert_query << endl;
+
+        // c_str converts string to constant char and this is required
+        const char* q = insert_query.c_str(); 
+
+        // MYSQL* conn = DBResponse::get_conn();
+
+        int qstate = mysql_query(conn, q);
+
+        if (!qstate) {
+            cout << endl << "Successfully added in database." << endl;
+            return 1;
+        }
+
+        cout << "Query Execution Problem!" << mysql_errno(conn) << endl;
+        return 0;
         
-    //     conn = mysql_real_connect \
-    //         (conn, mysqlD.server, mysqlD.user, mysqlD.pwd, mysqlD.database, 0, NULL, 0);
-    //     if (conn) {
-    //         cout << "Database Connected To MySql" << conn << endl;
-    //         cout << "Wait to continue..." << endl;
-    //     } else {
-    //         cout << "Failed To Connect!" << mysql_errno(conn) << endl;
-    //     }
-    // }
+    }
+
+    DBResponse() {
+    // cout << server << " " << user << " " << pwd << " " << database << endl;
+
+        Cdetails mysqlD;
+        mysqlD.server = "localhost";  // where the mysql database is
+        mysqlD.user = "root";         // user
+        mysqlD.pwd = "og21893";       // the password for the database
+        mysqlD.database = "events";	  // the databse
+
+        conn = mysql_init(0);
+        if (conn) {
+            cout << "Database Connected" << endl;
+            cout << "Wait to continue..." << endl;
+        } else {
+            cout << "Failed To Connect!" << mysql_errno(conn) << endl;
+        }
+        
+        conn = mysql_real_connect \
+            (conn, mysqlD.server, mysqlD.user, mysqlD.pwd, mysqlD.database, 0, NULL, 0);
+        if (conn) {
+            cout << "Database Connected To MySql" << conn << endl;
+            cout << "Wait to continue..." << endl;
+        } else {
+            cout << "Failed To Connect!" << mysql_errno(conn) << endl;
+        }
+    }
 
 /*
     static int ShowMovieList() {
