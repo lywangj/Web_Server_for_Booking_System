@@ -1,7 +1,19 @@
 # Web Server for Booking System
 
+Front-end section using `react.js`
+
+Back-end section using the `restbed` framework in `C++` to implement web RESTful API
+
+Data is stored and accessed using `MySQL`.
 
 
+### User Interface
+
+Users can 
+
+<img src="2022-11-03_132902.png" height="380">
+
+### Server
 
 ```SQL
 mysql> SELECT member_tb.name, member_tb.email, member_tb.seat, event_tb.m_name, event_tb.m_showdate 
