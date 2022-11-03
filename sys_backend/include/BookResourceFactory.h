@@ -15,8 +15,6 @@ public:
 
 private:
 
-    // float calculate(float num1, float num2, string operation);
-
     tuple<string, string, int, int> 
             get_path_parameters(const shared_ptr<Session> session) const;
             

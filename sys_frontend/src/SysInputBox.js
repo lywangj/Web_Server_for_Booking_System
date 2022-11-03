@@ -12,12 +12,8 @@ function SysInputBox(props) {
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      const blog = { name, email, event, result, seat };
+      const blog = { name, email, event, seat, result };
       console.log(blog);
-      // "/{name: .+}"
-      // "/{email: .+}"
-      // "/{event: [0-9]*}"
-      // "/{seat: [0-9]*}");
       const resource = name + "/" + email + "/" + event + "/" + seat;
       const url = new URL(resource, 'http://127.0.0.1:8080');
 
@@ -29,35 +25,6 @@ function SysInputBox(props) {
       .catch((error) => {
         console.error('Error:', error);
       });
-      // fetch(url, {
-      //   method: 'POST',
-      //   headers: { 
-      //     // "credentials": "include",
-      //     "Content-Type": "application/json",
-      //     // "Access-Control-Allow-Origin": "*" 
-      //   },
-      //   body: JSON.stringify(blog)
-      // })
-      // .then((response) => response.json());
-      // .then((data) => {
-      //   console.log('Success:', data);
-      // })
-      // .catch((error) => {
-      //   console.error('Error:', error);
-      // });
-
-      // fetch(url, {
-      //   method: 'POST',
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(blog)
-      // })
-      // .then((response) => response.json())
-      // .then((data) => {
-      //   console.log('Success:', data);
-      // })
-      // .catch((error) => {
-      //   console.error('Error:', error);
-      // });
     }
   
     return (
@@ -83,9 +50,9 @@ function SysInputBox(props) {
             value={event}
             onChange={(e) => setEvent(e.target.value)}
           >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
+            <option value="1">21 Dec Movie Night - The Dark Knight</option>
+            <option value="2">22 Dec New Friend Meet Up - Fight Club</option>
+            <option value="3">23 Dec Costume Party - Titanic</option>
           </select>
           <label>Choose Seats:</label>
           <select
@@ -95,6 +62,8 @@ function SysInputBox(props) {
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
           </select>
           <button>Submit</button>
         </form>
