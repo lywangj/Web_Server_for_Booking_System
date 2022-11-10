@@ -10,5 +10,6 @@ add_executable(BookingAPI
 target_link_libraries(BookingAPI restbed)
 target_link_libraries(BookingAPI mysqlclient)
 target_link_options(BookingAPI PUBLIC -L/usr/lib/mysql)
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 target_include_directories(BookingAPI PUBLIC ${CMAKE_SOURCE_DIR}/include)
 set_property(TARGET BookingAPI PROPERTY CXX_STANDARD 17)

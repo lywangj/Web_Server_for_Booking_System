@@ -61,7 +61,7 @@ public:
         }
     }
 
-    int add_particpant_to_db(const string name, const string email, const int event, const int seat) {
+    void add_particpant_to_db(const string name, const string email, const int event, const int seat) {
 
         string insert_query = 
             "insert into member_tb (name, email, event, seat) values ('" \
@@ -74,11 +74,30 @@ public:
 
         if (!qstate) {
             cout << endl << "Successfully added in database." << endl;
-            return 1;
+            // return 1;
+        } else {
+            cout << "Query Execution Problem!" << mysql_errno(conn) << endl;
         }
+        // return 0;
+    }
 
-        cout << "Query Execution Problem!" << mysql_errno(conn) << endl;
-        return 0;
+
+    void book_seats_to_db(const int eventId, const int c_seat) {
+
+        string updateQuery = "update event_tb set m_seat = m_seat - '" \
+                                +to_string(c_seat)+"' where m_id = '" +to_string(eventId)+ "'";
+
+        cout << updateQuery << endl;
+        const char* un = updateQuery.c_str();
+
+        int qstate = mysql_query(conn, un);
+
+        if (!qstate) {
+            cout << endl << "Successfully updated in database." << endl;
+
+        } else {
+            cout << "Query Execution Problem!" << mysql_errno(conn) << endl;
+        }
     }
 
 };

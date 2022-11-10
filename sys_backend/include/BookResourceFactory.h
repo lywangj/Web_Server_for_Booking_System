@@ -6,6 +6,7 @@
 #include "DBResponse.h"
 #include "IResourceFactory.h"
 
+
 class BookResourceFactory : public IResourceFactory {
 
 public:

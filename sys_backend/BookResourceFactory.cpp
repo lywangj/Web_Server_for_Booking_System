@@ -2,8 +2,13 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
+#include <thread>
+#include <mutex>
+#include <string>
 #include "json.hpp"
 #include "DBResponse.h"
+
+mutex task_mutex;
 
 using namespace nlohmann;
 
@@ -49,11 +54,33 @@ string BookResourceFactory::to_json(int update_result) {
     return jsonResult.dump();
 }
 
+// void add_booking(string name, string email, int event, int seat) {
+//     // _dbserver.add_particpant_to_db(name, email, event, seat);
+//     cout << " dd " << name << endl;
+// }
+
 void BookResourceFactory::get_handler(const shared_ptr<Session> session) {
     const auto [name, email, booked_event, booked_seats] = get_path_parameters(session);
 
     int result = 1;
-    result = _dbserver.add_particpant_to_db(name, email, booked_event, booked_seats);
+
+    auto add_booking = [](DBResponse _dbserver, const string name, \
+                            const string email, const int event, const int seat) {
+        _dbserver.add_particpant_to_db(name, email, event, seat);
+    };
+
+    auto record_booking = [](DBResponse _dbserver, const int event, const int seat) {
+        unique_lock<mutex> lk(task_mutex);
+        _dbserver.book_seats_to_db(event, seat);
+        lk.unlock();
+    };
+
+    thread recorder(record_booking, _dbserver, booked_event, booked_seats);
+    thread adder(add_booking, _dbserver, name, email, booked_event, booked_seats);
+    
+
+    adder.join();
+    recorder.join();
 
     auto content = to_json(result);
     // session->close(restbed::OK);
