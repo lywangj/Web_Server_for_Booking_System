@@ -2,7 +2,7 @@
 
 Front-end section using `react.js`
 
-Back-end section using the `restbed` framework in `C++` to implement web RESTful API, and then using multithreading data handler with mutex to avoid data races
+Back-end section using the `restbed` framework in `C++` to implement web RESTful API, and then using `multithreading` data handler with `mutex` to avoid data races
 
 Data is stored and accessed using `MySQL`.
 
